@@ -1,13 +1,5 @@
 const config = window.WEDDING_CONFIG || {};
-const isConfigured =
-  config.supabaseUrl &&
-  config.supabasePublishableKey &&
-  !config.supabaseUrl.includes("YOUR_PROJECT") &&
-  !config.supabasePublishableKey.includes("YOUR_SUPABASE");
-
-const supabaseClient = isConfigured
-  ? window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey)
-  : null;
+const isConfigured = config.rsvpApiUrl && !config.rsvpApiUrl.includes("YOUR_RSVP_API_URL");
 
 const form = document.querySelector("#rsvp-form");
 const alertBox = document.querySelector("#form-alert");
@@ -18,8 +10,11 @@ const guestDetails = document.querySelector("#guest-details");
 const groupName = document.querySelector("#group-name");
 const groupSummary = document.querySelector("#group-summary");
 const memberFields = document.querySelector("#member-fields");
+const turnstileWidget = document.querySelector("#turnstile-widget");
 
 let currentGroup = null;
+let turnstileWidgetId = null;
+let turnstileToken = "";
 
 function setAlert(message, type = "info") {
   const styles = {
@@ -49,20 +44,59 @@ function getInviteCode() {
   return inviteCodeInput.value.trim().toLowerCase();
 }
 
+function getTurnstileToken() {
+  return turnstileToken;
+}
+
 async function callRsvpFunction(body) {
-  const { data, error } = await supabaseClient.functions.invoke("rsvp", {
-    body,
+  const response = await fetch(config.rsvpApiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
   });
 
-  if (error) {
-    throw new Error(error.message || "The RSVP service is unavailable.");
+  let payload;
+  try {
+    payload = await response.json();
+  } catch {
+    throw new Error("The RSVP service returned an invalid response.");
   }
 
-  if (data?.error) {
-    throw new Error(data.error);
+  if (!response.ok || payload?.error) {
+    throw new Error(payload?.error || "The RSVP service is unavailable.");
   }
 
-  return data?.data;
+  return payload?.data;
+}
+
+function renderTurnstile() {
+  if (!config.turnstileSiteKey || !window.turnstile || !turnstileWidget || turnstileWidgetId !== null) {
+    return;
+  }
+
+  turnstileWidgetId = window.turnstile.render(turnstileWidget, {
+    sitekey: config.turnstileSiteKey,
+    theme: "light",
+    callback(token) {
+      turnstileToken = token;
+    },
+    "expired-callback"() {
+      turnstileToken = "";
+    },
+    "error-callback"() {
+      turnstileToken = "";
+    },
+  });
+}
+
+function resetTurnstile() {
+  turnstileToken = "";
+
+  if (window.turnstile && turnstileWidgetId !== null) {
+    window.turnstile.reset(turnstileWidgetId);
+  }
 }
 
 function fieldId(memberId, fieldName) {
@@ -128,14 +162,19 @@ function renderMemberFields(members) {
 async function findGroup() {
   clearAlert();
 
-  if (!supabaseClient) {
-    setAlert("Add your Supabase URL and publishable key in config.js before testing RSVP lookup.", "error");
+  if (!isConfigured) {
+    setAlert("Add your RSVP API URL in config.js before testing RSVP lookup.", "error");
     return;
   }
 
   const inviteCode = getInviteCode();
   if (!inviteCode) {
     setAlert("Enter your invitation UUID first.", "error");
+    return;
+  }
+
+  if (!getTurnstileToken()) {
+    setAlert("Complete the verification before finding your invitation.", "error");
     return;
   }
 
@@ -146,9 +185,11 @@ async function findGroup() {
     data = await callRsvpFunction({
       action: "lookup",
       inviteCode,
+      turnstileToken: getTurnstileToken(),
     });
   } catch (error) {
     setLoading(lookupButton, false, "Find invite");
+    resetTurnstile();
     currentGroup = null;
     memberFields.innerHTML = "";
     guestDetails.classList.add("hidden");
@@ -170,6 +211,8 @@ async function findGroup() {
   groupName.textContent = currentGroup.group_name;
   groupSummary.textContent = `${currentGroup.members.length} invited guest${currentGroup.members.length === 1 ? "" : "s"}`;
   renderMemberFields(currentGroup.members);
+  resetTurnstile();
+  renderTurnstile();
 
   guestDetails.classList.remove("hidden");
   setAlert("Invitation found. You can update and send each guest's RSVP.", "success");
@@ -200,6 +243,11 @@ async function submitRsvp(event) {
     return;
   }
 
+  if (!getTurnstileToken()) {
+    setAlert("Complete the verification before sending your RSVP.", "error");
+    return;
+  }
+
   setLoading(submitButton, true, "Send RSVP");
 
   try {
@@ -207,14 +255,17 @@ async function submitRsvp(event) {
       action: "submit",
       inviteCode: getInviteCode(),
       memberResponses,
+      turnstileToken: getTurnstileToken(),
     });
   } catch (error) {
     setLoading(submitButton, false, "Send RSVP");
+    resetTurnstile();
     setAlert(error.message || "Something went wrong while sending your RSVP.", "error");
     return;
   }
 
   setLoading(submitButton, false, "Send RSVP");
+  resetTurnstile();
 
   setAlert("Thank you. Your RSVP has been saved.", "success");
 }
@@ -227,3 +278,4 @@ inviteCodeInput.addEventListener("keydown", (event) => {
     findGroup();
   }
 });
+window.addEventListener("load", renderTurnstile);

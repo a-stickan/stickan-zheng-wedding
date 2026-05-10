@@ -380,11 +380,6 @@ deno_version = 2
 # [edge_runtime.secrets]
 # secret_key = "env(SECRET_VALUE)"
 
-[functions.rsvp]
-enabled = true
-verify_jwt = true
-entrypoint = "./functions/rsvp/index.ts"
-
 [analytics]
 enabled = true
 port = 54327

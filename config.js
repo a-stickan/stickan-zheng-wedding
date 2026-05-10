@@ -1,4 +1,4 @@
 window.WEDDING_CONFIG = {
-  supabaseUrl: "https://pzfalpvyndkmkesyuevl.supabase.co",
-  supabasePublishableKey: "sb_publishable_LXIZru14QuPg3Pw3OmrhtQ_yx6rw5Vb",
+  rsvpApiUrl: "http://127.0.0.1:8787",
+  turnstileSiteKey: "1x00000000000000000000AA",
 };
