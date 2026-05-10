@@ -1,0 +1,13 @@
+*.local
+.DS_Store
+
+node_modules/
+dist/
+
+.codex/
+.agents/
+
+workers/*/.git/
+workers/*/node_modules/
+workers/*/.wrangler/
+workers/*/.dev.vars
