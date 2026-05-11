@@ -1,4 +1,4 @@
-# Stickan-Zheng Wedding Website
+# Aidan & Angela Wedding Website
 
 Website for my wedding!
 
@@ -49,7 +49,7 @@ Browser
 - `supabase/migrations/`: database schema and RPC changes.
 
 Supabase should expose only the `api` schema through the Data API. RSVP tables live in the `private` schema.
-The invite UUID is a bearer secret: anyone with a group's UUID can view or edit that group's RSVP.
+The 8-character RSVP code is a bearer secret: anyone with a group's code can view or edit that group's RSVP.
 
 ## Operations
 

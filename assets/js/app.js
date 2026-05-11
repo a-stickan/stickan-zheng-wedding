@@ -168,8 +168,8 @@ async function findGroup() {
   }
 
   const inviteCode = getInviteCode();
-  if (!inviteCode) {
-    setAlert("Enter your invitation UUID first.", "error");
+  if (!/^[a-z0-9]{8}$/.test(inviteCode)) {
+    setAlert("Enter the 8-character RSVP code from your invitation.", "error");
     return;
   }
 
@@ -203,7 +203,7 @@ async function findGroup() {
     currentGroup = null;
     memberFields.innerHTML = "";
     guestDetails.classList.add("hidden");
-    setAlert("We could not find that invitation UUID. Check the code and try again.", "error");
+    setAlert("We could not find that RSVP code. Check the code and try again.", "error");
     return;
   }
 
