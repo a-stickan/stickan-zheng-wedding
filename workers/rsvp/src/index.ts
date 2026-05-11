@@ -14,7 +14,7 @@ type RsvpRequest = {
 	turnstileToken?: string;
 };
 
-const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const INVITE_CODE_PATTERN = /^[a-z0-9]{8}$/i;
 
 function parseAllowedOrigins(env: Env) {
 	return (env.ALLOWED_ORIGINS || "")
@@ -145,8 +145,9 @@ async function handleRsvp(request: Request, env: Env) {
 		return jsonResponse(request, env, { error: "Invalid JSON body." }, 400);
 	}
 
-	if (!body.inviteCode || !UUID_PATTERN.test(body.inviteCode)) {
-		return jsonResponse(request, env, { error: "A valid invitation UUID is required." }, 400);
+	const inviteCode = body.inviteCode?.trim().toLowerCase();
+	if (!inviteCode || !INVITE_CODE_PATTERN.test(inviteCode)) {
+		return jsonResponse(request, env, { error: "A valid 8-character RSVP code is required." }, 400);
 	}
 
 	if (!body.turnstileToken || body.turnstileToken.length > 2048) {
@@ -161,7 +162,7 @@ async function handleRsvp(request: Request, env: Env) {
 	try {
 		if (body.action === "lookup") {
 			const data = await callSupabaseRpc(env, request, "get_group_by_invite_code", {
-				lookup_invite_code: body.inviteCode,
+				lookup_invite_code: inviteCode,
 			});
 
 			return jsonResponse(request, env, { data });
@@ -173,7 +174,7 @@ async function handleRsvp(request: Request, env: Env) {
 			}
 
 			await callSupabaseRpc(env, request, "submit_group_rsvp", {
-				lookup_invite_code: body.inviteCode,
+				lookup_invite_code: inviteCode,
 				member_responses: body.memberResponses,
 			});
 

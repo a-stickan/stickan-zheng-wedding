@@ -35,7 +35,7 @@ describe("RSVP worker", () => {
 				Origin: "https://evil.example",
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ action: "lookup", inviteCode: "11111111-1111-4111-8111-111111111111" }),
+			body: JSON.stringify({ action: "lookup", inviteCode: "abcd1234" }),
 		});
 		const ctx = createExecutionContext();
 
@@ -47,14 +47,14 @@ describe("RSVP worker", () => {
 		expect(payload).toEqual({ error: "Origin not allowed." });
 	});
 
-	it("validates invitation UUIDs before calling Supabase", async () => {
+	it("validates RSVP codes before calling Supabase", async () => {
 		const request = new IncomingRequest("https://worker.example", {
 			method: "POST",
 			headers: {
 				Origin: "https://example.com",
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ action: "lookup", inviteCode: "not-a-uuid" }),
+			body: JSON.stringify({ action: "lookup", inviteCode: "not-a-code" }),
 		});
 		const ctx = createExecutionContext();
 
@@ -63,7 +63,7 @@ describe("RSVP worker", () => {
 
 		await waitOnExecutionContext(ctx);
 		expect(response.status).toBe(400);
-		expect(payload).toEqual({ error: "A valid invitation UUID is required." });
+		expect(payload).toEqual({ error: "A valid 8-character RSVP code is required." });
 	});
 
 	it("requires Turnstile for lookup requests", async () => {
@@ -73,7 +73,7 @@ describe("RSVP worker", () => {
 				Origin: "https://example.com",
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ action: "lookup", inviteCode: "11111111-1111-4111-8111-111111111111" }),
+			body: JSON.stringify({ action: "lookup", inviteCode: "abcd1234" }),
 		});
 		const ctx = createExecutionContext();
 
