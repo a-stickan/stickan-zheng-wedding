@@ -51,16 +51,17 @@ Browser
 Supabase should expose only the `api` schema through the Data API. RSVP tables live in the `private` schema.
 The 8-character RSVP code is a bearer secret: anyone with a group's code can view or edit that group's RSVP.
 
-## Operations
+## CI/CD
 
-Apply Supabase migrations manually:
+Pull requests run the Worker test suite and TypeScript check.
 
-```sh
-supabase db push --dry-run
-supabase db push
-```
+Merges to `main` automatically:
 
-Configure Worker secrets manually:
+- push Supabase migrations
+- deploy the Cloudflare RSVP Worker
+- trigger the GitHub Pages deployment configured in the repository settings
+
+Worker runtime secrets still live in Cloudflare and are not stored in this repository:
 
 ```sh
 cd workers/rsvp
@@ -68,12 +69,6 @@ npx wrangler secret put SUPABASE_URL
 npx wrangler secret put SUPABASE_SECRET_KEY
 npx wrangler secret put TURNSTILE_SECRET_KEY
 npx wrangler secret put ALLOWED_ORIGINS
-```
-
-Deploy the Worker manually:
-
-```sh
-npm run deploy --prefix workers/rsvp
 ```
 
 Do not edit a migration after it has been pushed. Create a follow-up migration instead.
