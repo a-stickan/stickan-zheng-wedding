@@ -44,6 +44,29 @@ function getInviteCode() {
   return inviteCodeInput.value.trim().toLowerCase();
 }
 
+function formatInviteCode(value) {
+  return value.replace(/[^a-z0-9]/gi, "").slice(0, 8).toUpperCase();
+}
+
+function formatPhoneNumber(value) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+
+  if (digits.startsWith("1")) {
+    const countryCode = digits.slice(0, 1);
+    const areaCode = digits.slice(1, 4);
+    const prefix = digits.slice(4, 7);
+    const lineNumber = digits.slice(7, 11);
+
+    return [countryCode, areaCode, prefix, lineNumber].filter(Boolean).join("-");
+  }
+
+  const areaCode = digits.slice(0, 3);
+  const prefix = digits.slice(3, 6);
+  const lineNumber = digits.slice(6, 10);
+
+  return [areaCode, prefix, lineNumber].filter(Boolean).join("-");
+}
+
 function getTurnstileToken() {
   return turnstileToken;
 }
@@ -107,6 +130,12 @@ function getMemberInput(memberId, fieldName) {
   return document.querySelector(`#${CSS.escape(fieldId(memberId, fieldName))}`);
 }
 
+function bindPhoneFormatter(input) {
+  input.addEventListener("input", () => {
+    input.value = formatPhoneNumber(input.value);
+  });
+}
+
 function escapeHtml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -121,32 +150,38 @@ function renderMemberFields(members) {
 
   members.forEach((member) => {
     const section = document.createElement("section");
-    section.className = "rounded-md border border-ink/10 p-4";
+    section.className = "rounded-lg border border-ink/10 bg-shell/60 p-4 sm:p-5";
     section.dataset.memberId = member.member_id;
 
     section.innerHTML = `
-      <h3 class="font-display text-2xl font-semibold">${escapeHtml(member.full_name)}</h3>
-      <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      <div class="flex flex-col gap-1 border-b border-ink/10 pb-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <label class="block text-sm font-bold" for="${fieldId(member.member_id, "rsvp-status")}">Will you attend?</label>
-          <select id="${fieldId(member.member_id, "rsvp-status")}" class="mt-2 min-h-12 w-full rounded-md border border-ink/20 px-4 outline-none ring-moss/30 focus:border-moss focus:ring-4" required>
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-petal">Guest</p>
+          <h3 class="mt-1 font-display text-3xl font-semibold">${escapeHtml(member.full_name)}</h3>
+        </div>
+        <p class="text-sm text-ink/60">Contact info is optional.</p>
+      </div>
+      <div class="mt-5">
+        <label class="block text-sm font-bold" for="${fieldId(member.member_id, "rsvp-status")}">Will you attend?</label>
+        <select id="${fieldId(member.member_id, "rsvp-status")}" class="mt-2 min-h-12 w-full rounded-md border border-ink/20 bg-white px-4 outline-none ring-moss/30 transition focus:border-moss focus:ring-4" required>
             <option value="">Choose one</option>
             <option value="accepted">Joyfully accepts</option>
             <option value="declined">Regretfully declines</option>
-          </select>
+        </select>
+      </div>
+      <div class="mt-5 grid gap-4 sm:grid-cols-2">
+        <div>
+          <label class="block text-sm font-bold" for="${fieldId(member.member_id, "email")}">Email <span class="font-normal text-ink/50">(optional)</span></label>
+          <input id="${fieldId(member.member_id, "email")}" type="email" maxlength="320" autocomplete="email" placeholder="name@example.com" class="mt-2 min-h-12 w-full rounded-md border border-ink/20 bg-white px-4 outline-none ring-moss/30 transition placeholder:text-ink/35 focus:border-moss focus:ring-4" />
         </div>
         <div>
-          <label class="block text-sm font-bold" for="${fieldId(member.member_id, "email")}">Email</label>
-          <input id="${fieldId(member.member_id, "email")}" type="email" maxlength="320" class="mt-2 min-h-12 w-full rounded-md border border-ink/20 px-4 outline-none ring-moss/30 focus:border-moss focus:ring-4" />
-        </div>
-        <div>
-          <label class="block text-sm font-bold" for="${fieldId(member.member_id, "phone")}">Phone</label>
-          <input id="${fieldId(member.member_id, "phone")}" type="tel" maxlength="50" class="mt-2 min-h-12 w-full rounded-md border border-ink/20 px-4 outline-none ring-moss/30 focus:border-moss focus:ring-4" />
+          <label class="block text-sm font-bold" for="${fieldId(member.member_id, "phone")}">Phone <span class="font-normal text-ink/50">(optional)</span></label>
+          <input id="${fieldId(member.member_id, "phone")}" type="tel" inputmode="tel" autocomplete="tel" maxlength="14" placeholder="1-404-555-0123" class="mt-2 min-h-12 w-full rounded-md border border-ink/20 bg-white px-4 outline-none ring-moss/30 transition placeholder:text-ink/35 focus:border-moss focus:ring-4" data-phone-input="true" />
         </div>
       </div>
       <div class="mt-4">
-        <label class="block text-sm font-bold" for="${fieldId(member.member_id, "notes")}">Notes</label>
-        <textarea id="${fieldId(member.member_id, "notes")}" rows="3" maxlength="2000" class="mt-2 w-full rounded-md border border-ink/20 px-4 py-3 outline-none ring-moss/30 focus:border-moss focus:ring-4"></textarea>
+        <label class="block text-sm font-bold" for="${fieldId(member.member_id, "notes")}">Notes <span class="font-normal text-ink/50">(optional)</span></label>
+        <textarea id="${fieldId(member.member_id, "notes")}" rows="3" maxlength="2000" placeholder="Dietary restrictions, accessibility needs, or anything else we should know." class="mt-2 w-full rounded-md border border-ink/20 bg-white px-4 py-3 outline-none ring-moss/30 transition placeholder:text-ink/35 focus:border-moss focus:ring-4"></textarea>
       </div>
     `;
 
@@ -154,7 +189,9 @@ function renderMemberFields(members) {
 
     getMemberInput(member.member_id, "rsvp-status").value = member.rsvp_status || "";
     getMemberInput(member.member_id, "email").value = member.email || "";
-    getMemberInput(member.member_id, "phone").value = member.phone || "";
+    const phoneInput = getMemberInput(member.member_id, "phone");
+    phoneInput.value = formatPhoneNumber(member.phone || "");
+    bindPhoneFormatter(phoneInput);
     getMemberInput(member.member_id, "notes").value = member.notes || "";
   });
 }
@@ -272,6 +309,9 @@ async function submitRsvp(event) {
 
 lookupButton.addEventListener("click", findGroup);
 form.addEventListener("submit", submitRsvp);
+inviteCodeInput.addEventListener("input", () => {
+  inviteCodeInput.value = formatInviteCode(inviteCodeInput.value);
+});
 inviteCodeInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     event.preventDefault();
