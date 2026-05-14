@@ -1,4 +1,4 @@
-# Aidan & Angela Wedding Website
+# Angela & Aidan Wedding Website
 
 Website for my wedding!
 
