@@ -7,6 +7,9 @@ Website for my wedding!
 Run the static site:
 
 ```sh
+npm run watch:css
+```
+```sh
 python3 -m http.server 8000
 ```
 
@@ -51,24 +54,24 @@ Browser
 Supabase should expose only the `api` schema through the Data API. RSVP tables live in the `private` schema.
 The 8-character RSVP code is a bearer secret: anyone with a group's code can view or edit that group's RSVP.
 
+## Testing
+
+Run the website browser tests locally:
+
+```sh
+npm run test:e2e
+```
+
+This builds `assets/css/site.css` from `assets/css/input.css`, starts the static site, and checks core page content, responsive photo disclosure behavior, and image references.
+
 ## CI/CD
 
-Pull requests run the Worker test suite and TypeScript check.
+Pull requests run the website Playwright tests, Worker test suite, and TypeScript check.
 
 Merges to `main` automatically:
 
-- push Supabase migrations
-- deploy the Cloudflare RSVP Worker
-- trigger the GitHub Pages deployment configured in the repository settings
+- Push Supabase migrations
+  - Do not edit a migration after it has been pushed, create a follow-up migration instead
+- Deploy the Cloudflare RSVP Worker
+- Trigger the GitHub Pages deployment configured in the repository settings
 
-Worker runtime secrets still live in Cloudflare and are not stored in this repository:
-
-```sh
-cd workers/rsvp
-npx wrangler secret put SUPABASE_URL
-npx wrangler secret put SUPABASE_SECRET_KEY
-npx wrangler secret put TURNSTILE_SECRET_KEY
-npx wrangler secret put ALLOWED_ORIGINS
-```
-
-Do not edit a migration after it has been pushed. Create a follow-up migration instead.
