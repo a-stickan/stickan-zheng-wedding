@@ -74,4 +74,3 @@ Merges to `main` automatically:
   - Do not edit a migration after it has been pushed, create a follow-up migration instead
 - Deploy the Cloudflare RSVP Worker
 - Trigger the GitHub Pages deployment configured in the repository settings
-
