@@ -8,33 +8,13 @@
       name="description"
       content="Wedding details and RSVP for Angela and Aidan's wedding in Atlanta, Georgia."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ["Cormorant Garamond", "Georgia", "serif"],
-              sans: ["Inter", "ui-sans-serif", "system-ui"],
-            },
-            colors: {
-              ink: "#1f2623",
-              moss: "#526553",
-              sage: "#8ea08d",
-              petal: "#c98880",
-              linen: "#f7f1ea",
-              shell: "#fffaf5",
-            },
-          },
-        },
-      };
-    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="assets/css/site.css" />
   </head>
   <body class="bg-shell text-ink antialiased">
     <header class="fixed inset-x-0 top-0 z-30 border-b border-white/10 bg-ink/45 text-white backdrop-blur-md">
@@ -44,7 +24,7 @@
           <a class="transition hover:text-white" href="#ceremony">Ceremony</a>
           <a class="transition hover:text-white" href="#reception">Reception</a>
           <a class="transition hover:text-white" href="#travel">Travel</a>
-          <a class="transition hover:text-white" href="#rsvp">RSVP</a>
+          <a class="transition hover:text-white" href="#photos">Photos</a>
         </div>
         <a
           href="#rsvp"
@@ -58,22 +38,22 @@
     <main id="top">
       <section class="relative min-h-[72vh] overflow-hidden bg-ink">
         <img
-          src="assets/images/greenhouse-canopy.jpg"
+          src="assets/images/greenhouse-canopy.JPG"
           alt=""
           width="1536"
           height="2048"
           class="absolute inset-0 h-full w-full object-cover"
         />
-        <div class="absolute inset-0 bg-ink/62 backdrop-blur-[2px]"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/82 to-ink/18"></div>
+        <div class="absolute inset-0 bg-ink/50 backdrop-blur-[2px]"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/20"></div>
         <div class="relative mx-auto flex min-h-[72vh] w-full max-w-5xl items-end px-4 pb-10 pt-24 text-white sm:px-6 lg:items-center lg:pb-12">
           <div class="max-w-2xl">
-            <p class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-linen">Atlanta Botanical Garden</p>
-            <h1 class="font-display text-6xl font-bold leading-none sm:text-7xl lg:text-8xl">
+            <p class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-linen">Our Wedding</p>
+            <h1 class="font-display text-5xl font-bold leading-none sm:text-7xl lg:text-8xl">
               Angela & Aidan
             </h1>
             <p class="mt-6 max-w-2xl text-lg leading-8 text-white/90">
-              Join us beneath the garden canopy for our ceremony in the Robinson Gazebo.
+              Join us beneath the garden canopy for our ceremony in the Atlanta Botanical Garden.
             </p>
             <div class="mt-8 flex flex-wrap items-center gap-3">
               <a href="#rsvp" class="rounded-full bg-petal px-5 py-3 text-sm font-bold text-white shadow-lg shadow-ink/20 transition hover:bg-[#b9746e]">
@@ -87,28 +67,28 @@
         </div>
       </section>
 
-      <section id="ceremony" class="scroll-mt-20 mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <div class="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+      <section id="ceremony" class="scroll-mt-20 mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
+        <div class="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
           <div>
             <p class="text-sm font-bold uppercase tracking-[0.2em] text-petal">Ceremony</p>
-            <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">Robinson Gazebo</h2>
+            <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">Atlanta Botanical Garden</h2>
             <p class="mt-5 leading-8 text-ink/75">
               The ceremony will take place in the Robinson Gazebo in the Atlanta Botanical Garden, surrounded by the Garden's greenhouses, flowers, and seasonal pumpkins.
             </p>
           </div>
           <figure class="bg-linen p-3">
             <img
-              src="assets/images/robinson-gazebo.jpg"
+              src="assets/images/robinson-gazebo-upscaled.png"
               alt="The Robinson Gazebo at the Atlanta Botanical Garden"
-              width="1398"
-              height="698"
+              width="2796"
+              height="1396"
               loading="lazy"
               decoding="async"
               class="aspect-[2/1] w-full rounded-md object-cover shadow-xl shadow-ink/10"
             />
           </figure>
         </div>
-        <div class="mt-10 grid gap-4 md:grid-cols-3">
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
           <article class="border-t border-ink/15 pt-5">
             <p class="text-sm font-bold text-moss">Date & Time</p>
             <h3 class="mt-3 font-display text-3xl font-semibold">October 16, 2026</h3>
@@ -117,16 +97,22 @@
               <p class="mt-1 font-display text-4xl font-semibold leading-none">11:00 AM</p>
             </div>
             <p class="mt-4 text-sm leading-6 text-ink/75">We recommend arriving at least 45 minutes early.</p>
-          </article>
-          <article class="border-t border-ink/15 pt-5">
-            <p class="text-sm font-bold text-moss">Place</p>
-            <h3 class="mt-3 font-display text-3xl font-semibold">Atlanta Botanical Garden</h3>
-            <p class="mt-4 text-sm leading-6 text-ink/75">Robinson Gazebo, tucked inside the Garden in Midtown Atlanta.</p>
-          </article>
-          <article class="border-t border-ink/15 pt-5">
-            <p class="text-sm font-bold text-moss">Address</p>
             <a
-              class="mt-3 block font-display text-3xl font-semibold underline decoration-ink/20 underline-offset-4 transition hover:decoration-ink/60"
+              class="mt-5 inline-flex items-center gap-2 rounded-full border border-ink/20 px-4 py-2 text-sm font-bold text-ink transition hover:border-ink/40"
+              href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Angela%20%26%20Aidan%27s%20Wedding%20Ceremony&dates=20261016T150000Z/20261016T160000Z&details=Our%20wedding%20ceremony%20at%20the%20Robinson%20Gazebo%20inside%20the%20Atlanta%20Botanical%20Garden.&location=Atlanta%20Botanical%20Garden%2C%201345%20Piedmont%20Ave%20NE%2C%20Atlanta%2C%20GA%2030309"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span aria-hidden="true">+</span>
+              <span>Add ceremony to calendar</span>
+            </a>
+          </article>
+          <article class="border-t border-ink/15 pt-5">
+            <p class="text-sm font-bold text-moss">Place & Address</p>
+            <h3 class="mt-3 font-display text-3xl font-semibold">Robinson Gazebo</h3>
+            <p class="mt-4 text-sm leading-6 text-ink/75">The ceremony will take place at the Robinson Gazebo inside the Atlanta Botanical Garden in Midtown Atlanta.</p>
+            <a
+              class="mt-4 block font-display text-2xl font-semibold underline decoration-ink/20 underline-offset-4 transition hover:decoration-ink/60 sm:text-3xl"
               href="https://www.google.com/maps/search/?api=1&query=1345%20Piedmont%20Ave%20NE%2C%20Atlanta%2C%20GA%2030309"
               target="_blank"
               rel="noopener noreferrer"
@@ -135,43 +121,70 @@
             </a>
           </article>
         </div>
-      </section>
 
-      <section class="bg-white">
-        <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+        <div class="mt-14 border-t border-ink/10 pt-10">
           <div class="max-w-xl">
-            <p class="text-sm font-bold uppercase tracking-[0.2em] text-petal">The Garden</p>
-            <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">Garden & Greenhouse</h2>
+            <h3 class="font-display text-3xl font-semibold sm:text-4xl">Garden & Greenhouse</h3>
           </div>
-          <div class="mt-10 grid gap-5 lg:grid-cols-[1.45fr_0.95fr] lg:items-stretch">
+
+          <div class="mt-8 grid gap-5 sm:hidden">
             <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
-              <img src="assets/images/garden-pool.jpg" alt="Garden pool surrounded by greenery" width="2048" height="1536" loading="lazy" decoding="async" class="aspect-[16/10] h-full w-full object-cover" />
+              <img src="assets/images/greenhouse-canopy.JPG" alt="Sunlight through tropical plants inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
+            </figure>
+            <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
+              <img src="assets/images/frog-exhibit.JPG" alt="Frog exhibit inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
+            </figure>
+          </div>
+          <details class="photo-disclosure mt-5 sm:contents">
+            <summary class="inline-flex cursor-pointer rounded-full border border-ink/20 px-5 py-3 text-sm font-bold text-ink transition hover:border-ink/40">
+              <span class="photo-disclosure-more">View more venue photos ↓</span>
+              <span class="photo-disclosure-less">Show fewer venue photos ↑</span>
+            </summary>
+            <div class="photo-disclosure-content mt-5 grid gap-5">
+              <figure class="overflow-hidden rounded-lg bg-linen shadow-sm" data-photo-extra="venue">
+                <img src="assets/images/garden-pool.JPG" alt="Garden pool surrounded by greenery" width="2048" height="1536" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover" />
+              </figure>
+              <figure class="overflow-hidden rounded-lg bg-linen shadow-sm" data-photo-extra="venue">
+                <img src="assets/images/layered-greenhouse.JPG" alt="Layered tropical greenery inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
+              </figure>
+              <figure class="overflow-hidden rounded-lg bg-linen shadow-sm" data-photo-extra="venue">
+                <img src="assets/images/greenhouse-palms.JPG" alt="Palm fronds and glass ceiling inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
+              </figure>
+              <figure class="overflow-hidden rounded-lg bg-linen shadow-sm" data-photo-extra="venue">
+                <img src="assets/images/greenhouse-orchids.JPG" alt="Pink orchids in the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
+              </figure>
+            </div>
+          </details>
+
+          <div class="mt-8 hidden gap-5 sm:grid lg:grid-cols-[1.45fr_0.95fr] lg:items-stretch">
+            <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
+              <img src="assets/images/garden-pool.JPG" alt="Garden pool surrounded by greenery" width="2048" height="1536" loading="lazy" decoding="async" class="aspect-[16/10] h-full w-full object-cover" />
             </figure>
             <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
               <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
-                <img src="assets/images/greenhouse-canopy.jpg" alt="Sunlight through tropical plants inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] h-full w-full object-cover object-center" />
+                <img src="assets/images/greenhouse-canopy.JPG" alt="Sunlight through tropical plants inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] h-full w-full object-cover object-center" />
               </figure>
               <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
-                <img src="assets/images/layered-greenhouse.jpg" alt="Layered tropical greenery inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] h-full w-full object-cover object-center" />
+                <img src="assets/images/layered-greenhouse.JPG" alt="Layered tropical greenery inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] h-full w-full object-cover object-center" />
               </figure>
             </div>
           </div>
-          <div class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="mt-5 hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3">
             <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
-              <img src="assets/images/greenhouse-palms.jpg" alt="Palm fronds and glass ceiling inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
+              <img src="assets/images/greenhouse-palms.JPG" alt="Palm fronds and glass ceiling inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
             </figure>
             <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
-              <img src="assets/images/greenhouse-orchids.jpg" alt="Pink orchids in the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
+              <img src="assets/images/greenhouse-orchids.JPG" alt="Pink orchids in the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
             </figure>
             <figure class="overflow-hidden rounded-lg bg-linen shadow-sm sm:col-span-2 lg:col-span-1">
-              <img src="assets/images/frog-exhibit.jpg" alt="Frog exhibit inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
+              <img src="assets/images/frog-exhibit.JPG" alt="Frog exhibit inside the greenhouse" width="1536" height="2048" loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover object-center" />
             </figure>
           </div>
         </div>
       </section>
 
       <section id="reception" class="scroll-mt-20 border-y border-ink/10 bg-linen">
-        <div class="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[0.8fr_1.2fr]">
+        <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p class="text-sm font-bold uppercase tracking-[0.2em] text-petal">Reception</p>
             <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">Details to Come</h2>
@@ -183,7 +196,7 @@
       </section>
 
       <section id="travel" class="scroll-mt-20 bg-white">
-        <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
           <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
             <div>
               <p class="text-sm font-bold uppercase tracking-[0.2em] text-petal">Travel & Stay</p>
@@ -218,8 +231,121 @@
         </div>
       </section>
 
+      <section id="photos" class="scroll-mt-20 bg-shell">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
+          <div class="max-w-xl">
+            <p class="text-sm font-bold uppercase tracking-[0.2em] text-petal">Angela & Aidan</p>
+            <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">Moments Together</h2>
+          </div>
+
+          <div class="mt-10 grid gap-5 sm:hidden">
+            <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
+              <img
+                src="assets/images/mukilteo-sunset.jpg"
+                alt="Angela and Aidan sitting by the water at sunset"
+                width="2992"
+                height="2350"
+                loading="lazy"
+                decoding="async"
+                class="aspect-[16/9] w-full object-cover object-center"
+              />
+            </figure>
+            <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
+              <img
+                src="assets/images/grad-photo.JPG"
+                alt="Angela and Aidan together in graduation robes"
+                width="1536"
+                height="2730"
+                loading="lazy"
+                decoding="async"
+                class="aspect-[4/5] w-full object-cover object-center"
+              />
+            </figure>
+          </div>
+          <details class="photo-disclosure mt-5 sm:contents">
+            <summary class="inline-flex cursor-pointer rounded-full border border-ink/20 px-5 py-3 text-sm font-bold text-ink transition hover:border-ink/40">
+              <span class="photo-disclosure-more">View more photos ↓</span>
+              <span class="photo-disclosure-less">Show fewer photos ↑</span>
+            </summary>
+            <div class="photo-disclosure-content mt-5 grid gap-5 sm:grid-cols-2">
+              <figure class="overflow-hidden rounded-lg bg-linen shadow-sm" data-photo-extra="couple">
+                <img
+                  src="assets/images/engagement-photo.JPG"
+                  alt="Angela showing her engagement ring while standing with Aidan in a leafy garden"
+                  width="1536"
+                  height="2730"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[4/5] w-full object-cover object-center"
+                />
+              </figure>
+              <figure class="overflow-hidden rounded-lg bg-linen shadow-sm" data-photo-extra="couple">
+                <img
+                  src="assets/images/seattle-photo.jpg"
+                  alt="Angela and Aidan taking a mirror photo in Seattle"
+                  width="1245"
+                  height="1660"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[4/5] w-full object-cover object-center"
+                />
+              </figure>
+            </div>
+          </details>
+
+          <div class="mt-10 hidden gap-5 sm:grid">
+            <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
+              <img
+                  src="assets/images/mukilteo-sunset.jpg"
+                alt="Angela and Aidan sitting by the water at sunset"
+                width="2992"
+                height="2350"
+                loading="lazy"
+                decoding="async"
+                class="aspect-[16/9] w-full object-cover object-center"
+              />
+            </figure>
+            <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
+                <img
+                  src="assets/images/engagement-photo.JPG"
+                  alt="Angela showing her engagement ring while standing with Aidan in a leafy garden"
+                  width="1536"
+                  height="2730"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[4/5] w-full object-cover object-center"
+                />
+              </figure>
+              <figure class="overflow-hidden rounded-lg bg-linen shadow-sm">
+                <img
+                  src="assets/images/grad-photo.JPG"
+                  alt="Angela and Aidan together in graduation robes"
+                  width="1536"
+                  height="2730"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[4/5] w-full object-cover object-center"
+                />
+              </figure>
+              <figure class="overflow-hidden rounded-lg bg-linen shadow-sm sm:col-span-2 lg:col-span-1">
+                <img
+                  src="assets/images/seattle-photo.jpg"
+                  alt="Angela and Aidan taking a mirror photo in Seattle"
+                  width="1245"
+                  height="1660"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[4/5] w-full object-cover object-center"
+                />
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="rsvp" class="scroll-mt-20 relative overflow-hidden bg-ink text-white">
-        <div class="mx-auto grid max-w-5xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+        <div class="mx-auto grid max-w-5xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
           <div>
             <p class="text-sm font-bold uppercase tracking-[0.2em] text-petal">RSVP</p>
             <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">Let Us Know</h2>

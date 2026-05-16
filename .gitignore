@@ -11,3 +11,11 @@ workers/*/.git/
 workers/*/node_modules/
 workers/*/.wrangler/
 workers/*/.dev.vars
+
+# Playwright
+mobile*.png
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

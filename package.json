@@ -1,0 +1,29 @@
+{
+  "name": "stickan-zheng-wedding",
+  "version": "1.0.0",
+  "description": "Website for my wedding!",
+  "main": "config.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/site.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/site.css --watch",
+    "test:e2e": "npm run build:css && playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-stickan/stickan-zheng-wedding.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/a-stickan/stickan-zheng-wedding/issues"
+  },
+  "homepage": "https://github.com/a-stickan/stickan-zheng-wedding#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@tailwindcss/cli": "^4.3.0",
+    "@types/node": "^25.8.0",
+    "tailwindcss": "^4.3.0"
+  }
+}
