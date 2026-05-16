@@ -25,7 +25,18 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: workers/rsvp/package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            workers/rsvp/package-lock.json
+
+      - name: Install website dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Test website
+        run: npm run test:e2e
 
       - name: Install Worker dependencies
         working-directory: workers/rsvp
