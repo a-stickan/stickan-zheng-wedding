@@ -350,35 +350,37 @@
             <p class="text-sm font-bold uppercase tracking-[0.2em] text-petal">RSVP</p>
             <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">Let Us Know</h2>
             <p class="mt-5 leading-8 text-white/75">
-              Enter the 8-character RSVP code from your invitation.
+              Please RSVP by <strong class="text-white">September 1</strong>. Enter the 8-character RSVP code from your invitation.
             </p>
           </div>
 
           <form id="rsvp-form" class="w-full rounded-lg bg-white p-5 text-ink shadow-2xl shadow-black/25 sm:p-8">
             <div id="form-alert" class="mb-5 hidden rounded-md border px-4 py-3 text-sm"></div>
 
-            <label class="block text-sm font-bold" for="invite-code">RSVP code</label>
-            <div class="mt-2 flex flex-col gap-3 sm:flex-row">
-              <input
-                id="invite-code"
-                name="invite_code"
-                required
-                autocomplete="off"
-                maxlength="8"
-                pattern="[A-Za-z0-9]{8}"
-                inputmode="text"
-                class="min-h-12 flex-1 rounded-md border border-ink/20 px-4 uppercase outline-none ring-moss/30 transition placeholder:normal-case focus:border-moss focus:ring-4"
-                placeholder="AB12CD34"
-              />
-              <button
-                id="lookup-button"
-                type="button"
-                class="min-h-12 rounded-md bg-moss px-5 text-sm font-bold text-white transition hover:bg-[#435544]"
-              >
-                Find invite
-              </button>
+            <div id="rsvp-entry">
+              <label class="block text-sm font-bold" for="invite-code">RSVP code</label>
+              <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+                <input
+                  id="invite-code"
+                  name="invite_code"
+                  required
+                  autocomplete="off"
+                  maxlength="8"
+                  pattern="[A-Za-z0-9]{8}"
+                  inputmode="text"
+                  class="min-h-12 flex-1 rounded-md border border-ink/20 px-4 uppercase outline-none ring-moss/30 transition placeholder:normal-case focus:border-moss focus:ring-4"
+                  placeholder="AB12CD34"
+                />
+                <button
+                  id="lookup-button"
+                  type="button"
+                  class="min-h-12 rounded-md bg-moss px-5 text-sm font-bold text-white transition hover:bg-[#435544]"
+                >
+                  Find invite
+                </button>
+              </div>
+              <div id="turnstile-widget" class="mt-5"></div>
             </div>
-            <div id="turnstile-widget" class="mt-5"></div>
 
             <div id="guest-details" class="mt-8 hidden">
               <div class="mb-6 rounded-md border border-sage/40 bg-linen p-4">
@@ -389,8 +391,22 @@
 
               <div id="member-fields" class="grid gap-5"></div>
 
-              <button id="submit-button" type="submit" class="mt-6 min-h-12 w-full rounded-md bg-petal px-5 text-sm font-bold text-white transition hover:bg-[#b9746e]">
+              <button id="submit-button" type="submit" class="mt-6 min-h-12 w-full rounded-md bg-moss px-5 text-sm font-bold text-white transition hover:bg-[#435544]">
                 Send RSVP
+              </button>
+            </div>
+
+            <div id="rsvp-confirmation" class="hidden rounded-lg border border-moss/30 bg-[#eef4ee] p-5 text-moss">
+              <p class="font-display text-3xl font-semibold text-ink">RSVP submitted!</p>
+              <p class="mt-3 text-sm leading-6 text-ink/75">
+                You can edit it at any time by using your RSVP code.
+              </p>
+              <button
+                id="edit-rsvp-button"
+                type="button"
+                class="mt-5 min-h-12 rounded-md bg-moss px-5 text-sm font-bold text-white transition hover:bg-[#435544]"
+              >
+                Edit RSVP
               </button>
             </div>
           </form>

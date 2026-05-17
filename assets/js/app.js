@@ -3,6 +3,9 @@ const isConfigured = config.rsvpApiUrl && !config.rsvpApiUrl.includes("YOUR_RSVP
 
 const form = document.querySelector("#rsvp-form");
 const alertBox = document.querySelector("#form-alert");
+const rsvpEntry = document.querySelector("#rsvp-entry");
+const rsvpConfirmation = document.querySelector("#rsvp-confirmation");
+const editRsvpButton = document.querySelector("#edit-rsvp-button");
 const lookupButton = document.querySelector("#lookup-button");
 const submitButton = document.querySelector("#submit-button");
 const inviteCodeInput = document.querySelector("#invite-code");
@@ -38,6 +41,19 @@ function setLoading(button, isLoading, label) {
   button.textContent = isLoading ? "One moment..." : label;
   button.classList.toggle("opacity-70", isLoading);
   button.classList.toggle("cursor-wait", isLoading);
+}
+
+function showRsvpForm() {
+  rsvpConfirmation.classList.add("hidden");
+  rsvpEntry.classList.remove("hidden");
+  guestDetails.classList.add("hidden");
+}
+
+function showRsvpConfirmation() {
+  clearAlert();
+  rsvpEntry.classList.add("hidden");
+  guestDetails.classList.add("hidden");
+  rsvpConfirmation.classList.remove("hidden");
 }
 
 function getInviteCode() {
@@ -198,6 +214,7 @@ function renderMemberFields(members) {
 
 async function findGroup() {
   clearAlert();
+  rsvpConfirmation.classList.add("hidden");
 
   if (!isConfigured) {
     setAlert("Add your RSVP API URL in config.js before testing RSVP lookup.", "error");
@@ -304,10 +321,17 @@ async function submitRsvp(event) {
   setLoading(submitButton, false, "Send RSVP");
   resetTurnstile();
 
-  setAlert("Thank you. Your RSVP has been saved.", "success");
+  showRsvpConfirmation();
 }
 
 lookupButton.addEventListener("click", findGroup);
+editRsvpButton.addEventListener("click", () => {
+  currentGroup = null;
+  memberFields.innerHTML = "";
+  showRsvpForm();
+  resetTurnstile();
+  renderTurnstile();
+});
 form.addEventListener("submit", submitRsvp);
 inviteCodeInput.addEventListener("input", () => {
   inviteCodeInput.value = formatInviteCode(inviteCodeInput.value);
