@@ -9,6 +9,7 @@ test('renders the core wedding sections', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Atlanta Botanical Garden' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Details to Come' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Planning for Atlanta' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Gift Details' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Moments Together' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Let Us Know' })).toBeVisible();
 });
