@@ -7,12 +7,47 @@ test('renders the core wedding sections', async ({ page }) => {
   await expect(page).toHaveTitle(/Angela & Aidan Wedding/);
   await expect(page.getByRole('heading', { name: 'Angela & Aidan' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Atlanta Botanical Garden' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Details to Come' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'The Capital Grille' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Planning for Atlanta' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Cocktail Attire' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Gift Details' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Moments Together' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Let Us Know' })).toBeVisible();
+});
+
+test('shows the reception details and map link', async ({ page }) => {
+  await page.goto('/');
+
+  const reception = page.locator('#reception');
+  await expect(reception.getByText('Friday, October 16, 2026')).toBeVisible();
+  await expect(reception.getByText('6:00–9:00 PM')).toBeVisible();
+  await expect(reception.getByRole('heading', { name: '255 East Paces Ferry Rd NE, Atlanta, GA 30305' })).toBeVisible();
+  await expect(reception.getByText('Please contact us if you need parking information.')).toBeVisible();
+
+  const mapLink = reception.getByRole('link', { name: 'View on Google Maps' });
+  await expect(mapLink).toHaveAttribute('href', /google\.com\/maps\/place\/The\+Capital\+Grille/);
+  await expect(mapLink).toHaveAttribute('target', '_blank');
+  await expect(mapLink).toHaveAttribute('rel', 'noopener noreferrer');
+
+  const calendarLink = reception.getByRole('link', { name: 'Add reception to calendar' });
+  const calendarHref = await calendarLink.getAttribute('href');
+  if (!calendarHref) {
+    throw new Error('Reception calendar link is missing an href.');
+  }
+  const calendarUrl = new URL(calendarHref);
+  expect(calendarUrl.searchParams.get('text')).toBe("Angela & Aidan's Wedding Reception");
+  expect(calendarUrl.searchParams.get('dates')).toBe('20261016T220000Z/20261017T010000Z');
+  expect(calendarUrl.searchParams.get('details')).toBe('Our wedding reception at The Capital Grille');
+  expect(calendarUrl.searchParams.get('location')).toBe('The Capital Grille, 255 East Paces Ferry Rd NE, Atlanta, GA 30305, USA');
+  await expect(calendarLink).toHaveAttribute('target', '_blank');
+  await expect(calendarLink).toHaveAttribute('rel', 'noopener noreferrer');
+});
+
+test('links the ceremony to the Atlanta Botanical Garden map listing', async ({ page }) => {
+  await page.goto('/');
+
+  const mapLink = page.locator('#ceremony').getByRole('link', { name: 'View on Google Maps' });
+  await expect(mapLink).toHaveAttribute('href', /google\.com\/maps\/place\/Atlanta\+Botanical\+Garden/);
 });
 
 test('all page image references are reachable', async ({ page, request }) => {
